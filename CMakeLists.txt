@@ -3,7 +3,7 @@ project("Heizung")
 set(CMAKE_C_FLAGS "-g -Wall")
 
 # set up my source files lists
-set(heizung_srcs src/heizung.c src/heizung_test.c)
+set(heizung_srcs src/heizung.c src/ptc.c)
 
-# set up my executables
-add_executable(heizung ${heizung_srcs})
+# set up my shared library
+add_library(heizung SHARED ${heizung_srcs})

@@ -40,5 +40,4 @@
 
 #define PTC_NR 12
 
-void decide(void);
 void messung(void);
