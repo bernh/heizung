@@ -1,3 +1,1 @@
-
-
-int temperatur(PTC_ID id);
+int temperatur_messung(int ptc_id);

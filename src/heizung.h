@@ -25,21 +25,20 @@
 
 // -----------------------------------------------------------------------------
 
-typedef enum {
-    F1,         // Sonenfühler
-    F2,         // Kollektofühler
-    F3,         // Boilerfühler unten
-    F4,         // Pufferfühler Sektion 1
-    F5,         // Pufferfühler Sektion 2
-    F6,         // Pufferfühler Sektion 3
-    F7,         // Heizung Rücklauffühler
-    F8,         // Festbrennstoffkesselfühler
-    F9,         // Pufferfühler mitte
-    F10,        // Pufferfühler oben
-    F11,        // Boilerfühler oben
-    F12,        // Außentempteraturfühler
-} PTC_ID;
+#define F1      0       // Sonenfühler
+#define F2      1       // Kollektofühler
+#define F3      2       // Boilerfühler unten
+#define F4      3       // Pufferfühler Sektion 1
+#define F5      4       // Pufferfühler Sektion 2
+#define F6      5       // Pufferfühler Sektion 3
+#define F7      6       // Heizung Rücklauffühler
+#define F8      7       // Festbrennstoffkesselfühler
+#define F9      8       // Pufferfühler mitte
+#define F10     9       // Pufferfühler oben
+#define F11    10       // Boilerfühler oben
+#define F12    11       // Außentempteraturfühler
 
-
+#define PTC_NR 12
 
 void decide(void);
+void messung(void);
