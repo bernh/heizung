@@ -8,7 +8,10 @@ ffibuilder.set_source("_python_interface",
     c_interface,
     libraries=["heizung"],
     library_dirs=["."])
-ffibuilder.cdef(c_interface)
+ffibuilder.cdef(c_interface +
+"""
+    extern "Python+C" int temperatur_messung(int ptc_id);
+""")
 
 
 if __name__ == "__main__":
