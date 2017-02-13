@@ -1,25 +1,27 @@
 import os
+import time
+import threading
 
-import matplotlib.pyplot as plt
-plt.rcdefaults()
 import matplotlib.pyplot as plt
 
 # local C extension
 from _python_interface import ffi, lib
 
+temperatures = [50] * 12
+
 
 @ffi.def_extern()
 def temperatur_messung(ptc_id):
-    return 10 * ptc_id
-
+    return int(temperatures[ptc_id])
 
 
 class Diagram:
 
     def __init__(self):
-        self.values = [3,4,5,4,3,4,5,6,1,2,3]
+        self.values = [0,1,0,1,0,1,0,1,0,1,0]
         self.outputs = ("UP 1", "UP 2", "UP 3", "UP 4", "ZV 5", "UP 6", "UP 7", "UP 8", "Brenner", "UP 10", "ZV 10")
         self.fig, self.ax = plt.subplots()
+        self.fs = []
 
         x_pos = range(len(self.outputs))
         self.ax.bar(x_pos, self.values, align = "center")
@@ -29,25 +31,39 @@ class Diagram:
         self.ax.set_ylabel('Digital Out')
         self.ax.set_title('Heizung Eggerding')
 
-        axF1 = plt.axes([0.15, 0.1, 0.65, 0.03])
-        F1 = plt.Slider(axF1, 'F1', 0.0, 120.0, valinit=50)
-        F1.on_changed(self.updateFactory(3))
-
+        for t in range(12):
+            axF = plt.axes([0.15, 0.05 + (t * 0.05), 0.65, 0.03])
+            f = plt.Slider(axF, 'F{}'.format(t+1), 0.0, 120.0, valinit=50)
+            f.on_changed(self.update_factory(t))
+            self.fs.append(f)  # prevent f from being garbage collected (really? WTF?)
         plt.show()
 
-    def updateFactory(self, sensor_index):
+    def update_factory(self, sensor_index):
         def update(value):
-            self.values[sensor_index] = value
-            self.ax.clear()
-            x_pos = range(len(self.outputs))
-            self.ax.bar(x_pos, self.values, align = "center")
+            global temperatures
+            temperatures[sensor_index] = value
+            # self.ax.clear()
+            # x_pos = range(len(self.outputs))
+            # self.ax.bar(x_pos, self.temperatures, align="center")
         return update
 
 
 def main():
+
+    def thread_func():
+        while True:
+            time.sleep(0.1)
+            lib.loop()
+
     lib.setup()
-    lib.loop()
-    temps = Diagram()
+    t = threading.Thread(target = thread_func)
+    t.daemon = True
+    t.start()
+
+    try:
+        temps = Diagram()
+    finally:
+        pass
 
 
 if __name__ == "__main__":
