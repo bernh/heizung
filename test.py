@@ -1,6 +1,5 @@
 import os
 import time
-import threading
 
 import matplotlib.pyplot as plt
 
@@ -17,11 +16,12 @@ def temperatur_messung(ptc_id):
 
 class Diagram:
 
-    def __init__(self):
+    def __init__(self, lib):
         self.values = [0,1,0,1,0,1,0,1,0,1,0]
         self.outputs = ("UP 1", "UP 2", "UP 3", "UP 4", "ZV 5", "UP 6", "UP 7", "UP 8", "Brenner", "UP 10", "ZV 10")
         self.fig, self.ax = plt.subplots()
         self.fs = []
+        self.lib = lib
 
         x_pos = range(len(self.outputs))
         self.ax.bar(x_pos, self.values, align = "center")
@@ -42,28 +42,21 @@ class Diagram:
         def update(value):
             global temperatures
             temperatures[sensor_index] = value
-            # self.ax.clear()
-            # x_pos = range(len(self.outputs))
-            # self.ax.bar(x_pos, self.temperatures, align="center")
+            self.lib.loop()
+            digital_outs = self.lib.get_outputs()
+            for i in range(11):
+                self.values[i] = digital_outs[i]
+            self.ax.clear()
+            x_pos = range(len(self.outputs))
+            self.ax.bar(x_pos, self.values, align="center")
         return update
 
 
 def main():
 
-    def thread_func():
-        while True:
-            time.sleep(0.1)
-            lib.loop()
-
     lib.setup()
-    t = threading.Thread(target = thread_func)
-    t.daemon = True
-    t.start()
-
-    try:
-        temps = Diagram()
-    finally:
-        pass
+    lib.loop()
+    temps = Diagram(lib)
 
 
 if __name__ == "__main__":

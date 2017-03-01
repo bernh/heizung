@@ -22,10 +22,11 @@
 #define F6max  90       // Puffertemperatur Sektion 3
 #define F8min  65       // minimale Festbrennstoffkesseltemperatur
 #define F11max 58       // Boilertemperatur oben
+#define F12min 10       // TODO? 
 
 // -----------------------------------------------------------------------------
 
-#define F1      0       // Sonenfühler
+#define F1      0       // Sonnenfühler
 #define F2      1       // Kollektofühler
 #define F3      2       // Boilerfühler unten
 #define F4      3       // Pufferfühler Sektion 1
@@ -40,4 +41,19 @@
 
 #define PTC_NR 12
 
-void messung(void);
+// -----------------------------------------------------------------------------
+
+#define UP1     0       // Umwälzpumpe 1 - Boilerladung Solar
+#define UP2     1       // Umwälzpumpe 2 - Pufferladung Sektion 1
+#define UP3     2       // Umwälzpumpe 3 - Pufferladung Sektion 2
+#define UP4     3       // Umwälzpumpe 4 - Pufferladung Sektion 3
+#define ZV5     4       // Zonenventil 5 - Umschaltg. PLT/Puffer
+#define UP6     5       // Umwälzpumpe 6 - Solarspeisung PLT
+#define UP7     6       // Umwälzpumpe 7 - Boilerladung Holzkessel
+#define UP8     7       // Umwälzpumpe 8 - Boilerladung Puffer
+#define BRENNER 8       // Ölbrenner     - Brennerfreigabe
+#define UP10    9       // Umwälzpumpe 10 - Boilerladung Ölkessel
+#define ZV10   10       // Zonenventil 10 - Umschaltg. Öl/Solar
+
+
+#define OUTPUT_NR 11

@@ -1,0 +1,43 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+D1	heizung.h	4;"	d
+D10	heizung.h	13;"	d
+D11	heizung.h	14;"	d
+D12	heizung.h	15;"	d
+D13	heizung.h	16;"	d
+D2	heizung.h	5;"	d
+D3	heizung.h	6;"	d
+D4	heizung.h	7;"	d
+D5	heizung.h	8;"	d
+D6	heizung.h	9;"	d
+D7	heizung.h	10;"	d
+D8	heizung.h	11;"	d
+D9	heizung.h	12;"	d
+F1	heizung.h	28;"	d
+F10	heizung.h	37;"	d
+F11	heizung.h	38;"	d
+F11max	heizung.h	24;"	d
+F12	heizung.h	39;"	d
+F2	heizung.h	29;"	d
+F3	heizung.h	30;"	d
+F3max	heizung.h	19;"	d
+F4	heizung.h	31;"	d
+F4max	heizung.h	20;"	d
+F5	heizung.h	32;"	d
+F5max	heizung.h	21;"	d
+F6	heizung.h	33;"	d
+F6max	heizung.h	22;"	d
+F7	heizung.h	34;"	d
+F8	heizung.h	35;"	d
+F8min	heizung.h	23;"	d
+F9	heizung.h	36;"	d
+PTC_NR	heizung.h	41;"	d
+loop	heizung.c	/^void loop(void)$/;"	f
+messung	heizung.c	/^void messung(void)$/;"	f
+setup	heizung.c	/^void setup(void)$/;"	f
+temperatur_messung	ptc.c	/^int temperatur_messung(int ptc_id) {$/;"	f
+temperaturen	heizung.c	/^static int temperaturen[PTC_NR] = {};$/;"	v	file:
