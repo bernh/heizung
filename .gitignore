@@ -4,3 +4,4 @@ CMakeFiles
 *.cmake
 *.so
 _python_interface.*
+tags
