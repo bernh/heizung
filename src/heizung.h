@@ -13,7 +13,7 @@
 #define D10    15       // Pufferfühler oben und Rücklauffühler
 #define D11     5       // Pufferfühler mitte und Festbrennstoffkesselfühler
 #define D12    30       // Kollektorfühler und Heizung Rücklauf
-#define D13    15       // TODO ?
+#define D13    15       // Kollektorfühler und Heizung Rücklauf 
 
 // Temperaturgrenzen
 #define F3max  65       // Boilertemperatur unten
@@ -22,7 +22,7 @@
 #define F6max  90       // Puffertemperatur Sektion 3
 #define F8min  65       // minimale Festbrennstoffkesseltemperatur
 #define F11max 58       // Boilertemperatur oben
-#define F12min 10       // TODO? 
+#define F12min 10       // Außentemperatur
 
 // -----------------------------------------------------------------------------
 
@@ -41,19 +41,23 @@
 
 #define PTC_NR 12
 
+static const int analog_pin_mapping[PTC_NR]  = {A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11};
+
 // -----------------------------------------------------------------------------
 
 #define UP1     0       // Umwälzpumpe 1 - Boilerladung Solar
 #define UP2     1       // Umwälzpumpe 2 - Pufferladung Sektion 1
 #define UP3     2       // Umwälzpumpe 3 - Pufferladung Sektion 2
-#define UP4     3       // Umwälzpumpe 4 - Pufferladung Sektion 3
-#define ZV5     4       // Zonenventil 5 - Umschaltg. PLT/Puffer
-#define UP6     5       // Umwälzpumpe 6 - Solarspeisung PLT
-#define UP7     6       // Umwälzpumpe 7 - Boilerladung Holzkessel
-#define UP8     7       // Umwälzpumpe 8 - Boilerladung Puffer
-#define BRENNER 8       // Ölbrenner     - Brennerfreigabe
-#define UP10    9       // Umwälzpumpe 10 - Boilerladung Ölkessel
-#define ZV10   10       // Zonenventil 10 - Umschaltg. Öl/Solar
+#define ZV3a    3       // Zonenventil 3a - Umschaltung Sektion 1 auf 2
+#define UP4     4       // Umwälzpumpe 4 - Pufferladung Sektion 3
+#define ZV4a    5       // Zonenventil 4a - Umschaltung Sektion 2 auf 3
+#define ZV5     6       // Zonenventil 5 - Umschaltg. Solardirektheizung
+#define UP6     7       // Umwälzpumpe 6 - Solarspeisung PWT
+#define UP7     8       // Umwälzpumpe 7 - Pufferladung Holzkessel
+#define UP8     9       // Umwälzpumpe 8 - Boilerladung Puffer
+#define UP9     10      // Umwälzpumpe 9 - Heizungsumlaufpumpe
+#define UP10    11      // Umwälzpumpe 10 - Boilerladung Pelletskessel
+#define KESSEL  12      // Pelletskessel - Brennerfreigabe
 
+#define OUTPUT_NR 13
 
-#define OUTPUT_NR 11

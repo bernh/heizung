@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from _python_interface import ffi, lib
 
 temperatures = [50] * 12
-
+OUTPUT_NR = 13
 
 @ffi.def_extern()
 def temperatur_messung(ptc_id):
@@ -18,8 +18,9 @@ def temperatur_messung(ptc_id):
 class Diagram:
 
     def __init__(self, lib):
-        self.values = [0,1,0,1,0,1,0,1,0,1,0]
-        self.outputs = ("UP 1", "UP 2", "UP 3", "UP 4", "ZV 5", "UP 6", "UP 7", "UP 8", "Brenner", "UP 10", "ZV 10")
+        self.outputs = [0] * OUTPUT_NR
+        self.output_names = ("UP 1", "UP 2", "UP 3", "ZV3a", "UP 4", "ZV4a",
+                             "ZV 5", "UP 6", "UP 7", "UP 8", "UP9", "UP 10", "KESSEL")
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(411)
         self.fs = []
@@ -35,10 +36,10 @@ class Diagram:
         plt.show()
 
     def draw(self):
-        x_pos = range(len(self.outputs))
-        self.ax.bar(x_pos, self.values, align = "center")
+        x_pos = range(len(self.output_names))
+        self.ax.bar(x_pos, self.outputs, align = "center")
         self.ax.set_xticks(x_pos)
-        self.ax.set_xticklabels(self.outputs)
+        self.ax.set_xticklabels(self.output_names)
         self.ax.set_ylabel('Digital Out')
         self.ax.set_title('Heizung Eggerding')
 
@@ -48,8 +49,8 @@ class Diagram:
             temperatures[sensor_index] = value
             self.lib.loop()
             digital_outs = self.lib.get_outputs()
-            for i in range(11):
-                self.values[i] = digital_outs[i]
+            for i in range(OUTPUT_NR):
+                self.outputs[i] = digital_outs[i]
             self.ax.clear()
             self.draw()
         return update

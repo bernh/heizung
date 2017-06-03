@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project("Heizung")
-set(CMAKE_C_FLAGS "-g -Wall")
+set(CMAKE_C_FLAGS "-g -Wall -DTEST")
 
 # set up my source files lists, src/ptc.c is excluded
 set(heizung_srcs src/heizung.c)
