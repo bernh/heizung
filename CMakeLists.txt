@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 project("Heizung")
-set(CMAKE_C_FLAGS "-g -Wall -DTEST")
+set(CMAKE_CXX_FLAGS "-g -Wall -DPC_TEST")
 
 # set up my source files lists, src/ptc.c is excluded
-set(heizung_srcs src/heizung.c)
+set(heizung_srcs src/heizung.cpp)
 
 # set up my shared library
 add_library(heizung SHARED ${heizung_srcs})

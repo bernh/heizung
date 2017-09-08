@@ -1,3 +1,6 @@
+void setup_heizung(void);
+void loop_heizung(void);
+
 // --- Konfiguration ----------------------------------------------------------
 
 // Temperaturdifferenzen

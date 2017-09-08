@@ -1,7 +1,9 @@
 #include <stdio.h>
 
-#ifdef TEST
+#ifdef PC_TEST
     #include "test.h"
+#else
+    #include "Arduino.h"
 #endif
 
 #include "heizung.h"
@@ -183,14 +185,14 @@ void ausgaenge(void)
 
 // --- Arduino Funktionen ---
 
-void setup(void)
+void setup_heizung(void)
 {
     for (int i = 0; i < PTC_NR; i++) {
         t[i] = -1;
     }
 }
 
-void loop(void)
+void loop_heizung(void)
 {
     messung();
     ausgaenge();
