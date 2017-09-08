@@ -8,6 +8,7 @@
 
 #include "heizung.h"
 #include "ptc.h"
+#include "outputs.h"
 
 // --- globale Variablen ---
 static int t[PTC_NR] = {};
@@ -184,6 +185,9 @@ void ausgaenge(void)
     solar();
     kesselfreigabe();
     scheitholzkessel();
+#ifndef PC_TEST
+    set_outputs(outputs);
+#endif
 }
 
 // --- Arduino Funktionen ---

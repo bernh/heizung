@@ -64,3 +64,6 @@ static const int analog_pin_mapping[PTC_NR]  = {A0, A1, A2, A3, A4, A5, A6, A7, 
 
 #define OUTPUT_NR 13
 
+// XXX re-check mapping
+static const int output_pin_mapping[OUTPUT_NR] = {22, 23, 24, 31, 25, 32, 26, 27, 28, 29, 0, 0, 30};
+
