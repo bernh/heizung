@@ -5,3 +5,4 @@ CMakeFiles
 *.so
 _python_interface.*
 tags
+ssh_fix.txt
