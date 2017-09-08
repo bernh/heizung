@@ -1,9 +1,9 @@
-#include <stdio.h>
-
 #ifdef PC_TEST
+    #include <stdio.h>
     #include "test.h"
 #else
     #include "Arduino.h"
+    #include "utils.h"
 #endif
 
 #include "heizung.h"
@@ -13,6 +13,9 @@
 static int t[PTC_NR] = {};
 static int outputs[OUTPUT_NR] = {};
 //static int heizung_ein_aus = 1;  // digital input
+
+
+
 
 // --- call PTC (or Python test) code ---
 void messung(void)
