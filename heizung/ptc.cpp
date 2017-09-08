@@ -1,6 +1,4 @@
-#ifndef PC_TEST
-    #include "Arduino.h"
-#endif
+#include "Arduino.h"
 
 #include "ptc.h"
 #include "heizung.h"

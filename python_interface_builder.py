@@ -1,7 +1,7 @@
 from cffi import FFI
 ffibuilder = FFI()
 
-with open("src/test.h") as f:
+with open("heizung/test.h") as f:
     c_interface = f.read()
 
 ffibuilder.set_source("_python_interface",
