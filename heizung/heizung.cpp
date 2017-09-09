@@ -214,6 +214,24 @@ void loop_heizung(void)
 }
 
 // --- debug ---
+void loop_output_test(void)
+{
+    outputs[UP1   ] = 1;
+    outputs[UP2   ] = 1;
+    outputs[UP3   ] = 1;
+    outputs[UP4   ] = 1;
+    outputs[ZV5   ] = 1;
+    outputs[UP6   ] = 1;
+    outputs[UP7   ] = 1;
+    outputs[UP8   ] = 1;
+    outputs[KESSEL] = 1;
+    outputs[ZV3a  ] = 1;
+    outputs[ZV4a  ] = 1;
+    outputs[ALARM ] = 1;
+    set_outputs(outputs);
+}
+
+
 int *get_outputs(void)
 {
     return &outputs[0];

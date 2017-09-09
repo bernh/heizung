@@ -1,5 +1,6 @@
 void setup_heizung(void);
 void loop_heizung(void);
+void loop_output_test(void);
 
 // --- Konfiguration ----------------------------------------------------------
 
@@ -51,19 +52,18 @@ static const int analog_pin_mapping[PTC_NR]  = {A0, A1, A2, A3, A4, A5, A6, A7, 
 #define UP1     0       // Umwälzpumpe 1 - Boilerladung Solar
 #define UP2     1       // Umwälzpumpe 2 - Pufferladung Sektion 1
 #define UP3     2       // Umwälzpumpe 3 - Pufferladung Sektion 2
-#define ZV3a    3       // Zonenventil 3a - Umschaltung Sektion 1 auf 2
-#define UP4     4       // Umwälzpumpe 4 - Pufferladung Sektion 3
-#define ZV4a    5       // Zonenventil 4a - Umschaltung Sektion 2 auf 3
-#define ZV5     6       // Zonenventil 5 - Umschaltg. Solardirektheizung
-#define UP6     7       // Umwälzpumpe 6 - Solarspeisung PWT
-#define UP7     8       // Umwälzpumpe 7 - Pufferladung Holzkessel
-#define UP8     9       // Umwälzpumpe 8 - Boilerladung Puffer
-#define UP9     10      // Umwälzpumpe 9 - Heizungsumlaufpumpe
-#define UP10    11      // Umwälzpumpe 10 - Boilerladung Pelletskessel
-#define KESSEL  12      // Pelletskessel - Brennerfreigabe
+#define UP4     3       // Umwälzpumpe 4 - Pufferladung Sektion 3
+#define ZV5     4       // Zonenventil 5 - Umschaltg. Solardirektheizung
+#define UP6     5       // Umwälzpumpe 6 - Solarspeisung PWT
+#define UP7     6       // Umwälzpumpe 7 - Pufferladung Holzkessel
+#define UP8     7       // Umwälzpumpe 8 - Boilerladung Puffer
+#define KESSEL  8       // Pelletskessel - Brennerfreigabe
+#define ZV3a    9       // Zonenventil 3a - Umschaltung Sektion 1 auf 2
+#define ZV4a    10       // Zonenventil 4a - Umschaltung Sektion 2 auf 3
+#define ALARM   11
 
-#define OUTPUT_NR 13
 
-// XXX re-check mapping
-static const int output_pin_mapping[OUTPUT_NR] = {22, 23, 24, 31, 25, 32, 26, 27, 28, 29, 0, 0, 30};
+#define OUTPUT_NR 12
+
+static const int output_pin_mapping[OUTPUT_NR] = {22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33};
 

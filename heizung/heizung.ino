@@ -15,5 +15,6 @@ void setup() {
 
 void loop() {
     loop_heizung();
+    //loop_output_test();
     delay(1000);
 }
