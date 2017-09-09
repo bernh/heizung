@@ -16,14 +16,22 @@ static int outputs[OUTPUT_NR] = {};
 //static int heizung_ein_aus = 1;  // digital input
 
 
-
-
 // --- call PTC (or Python test) code ---
 void messung(void)
 {
     for (int i = 0; i < PTC_NR; i++) {
         t[i] = temperatur_messung(i);
-        printf("PTC ID %d: %d°C\n", i, t[i]);
+        #ifndef PC_TEST
+             Serial.print("PTC ID ");
+             Serial.print(i);
+             Serial.print(" :");
+             Serial.print(t[i]);
+             Serial.println(" C");
+        #else
+             printf("PTC ID %d: %d C\n", i, t[i]);
+        #endif
+        
+        
     }
     // TODO heizung_ein_aus = ...
 }
