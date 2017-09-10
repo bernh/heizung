@@ -1,9 +1,3 @@
-// interface for the Python test code
-void setup(void);
-void loop(void);
-
-int *get_outputs(void);
-
 // mock some arduino defines
 #define A0 0
 #define A1 1

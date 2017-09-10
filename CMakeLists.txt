@@ -8,7 +8,8 @@ find_package(Threads REQUIRED)
 set(gtest_SOURCE_DIR googletest)
 include_directories(
   ${gtest_SOURCE_DIR}/include
-  ${gtest_SOURCE_DIR})
+  ${gtest_SOURCE_DIR}
+  heizung)
 
 # compile google test code into libs
 add_library(gtest ${gtest_SOURCE_DIR}/src/gtest-all.cc)
@@ -20,7 +21,7 @@ add_library(heizung ${heizung_srcs})
 
 # build test executables
 add_executable(test_heizung test/test_heizung.cc)
-target_link_libraries(test_heizung gtest_main gtest Threads::Threads)
+target_link_libraries(test_heizung heizung gtest_main gtest Threads::Threads)
 
 # --- generating and building the python interface ---
 option (python_ffi "Python test interface" OFF)

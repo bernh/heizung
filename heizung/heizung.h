@@ -31,7 +31,7 @@ void loop_output_test(void);
 // -----------------------------------------------------------------------------
 
 #define F1      0       // Sonnenfühler
-#define F2      1       // Kollektofühler
+#define F2      1       // Kollektorfühler
 #define F3      2       // Boilerfühler unten
 #define F4      3       // Pufferfühler Sektion 1
 #define F5      4       // Pufferfühler Sektion 2
@@ -53,13 +53,13 @@ static const int analog_pin_mapping[PTC_NR]  = {A0, A1, A2, A3, A4, A5, A6, A7, 
 #define UP2     1       // Umwälzpumpe 2 - Pufferladung Sektion 1
 #define UP3     2       // Umwälzpumpe 3 - Pufferladung Sektion 2
 #define UP4     3       // Umwälzpumpe 4 - Pufferladung Sektion 3
-#define ZV5     4       // Zonenventil 5 - Umschaltg. Solardirektheizung
+#define ZV5     4       // Zonenventil 5 - Zonenventil Solardirektheizung
 #define UP6     5       // Umwälzpumpe 6 - Solarspeisung PWT
 #define UP7     6       // Umwälzpumpe 7 - Pufferladung Holzkessel
 #define UP8     7       // Umwälzpumpe 8 - Boilerladung Puffer
 #define KESSEL  8       // Pelletskessel - Brennerfreigabe
-#define ZV3a    9       // Zonenventil 3a - Umschaltung Sektion 1 auf 2
-#define ZV4a    10       // Zonenventil 4a - Umschaltung Sektion 2 auf 3
+#define ZV3a    9       // Zonenventil3a - Zonenventil 3a Sektion 1 auf 2
+#define ZV4a    10      // Zonenventil4a - Zonenventil 4a Sektion 2 auf 3
 #define ALARM   11
 
 

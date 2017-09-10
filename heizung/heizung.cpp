@@ -13,7 +13,6 @@
 // --- globale Variablen ---
 static int t[PTC_NR] = {};
 static int outputs[OUTPUT_NR] = {};
-//static int heizung_ein_aus = 1;  // digital input
 
 
 // --- call PTC (or Python test) code ---
@@ -27,13 +26,8 @@ void messung(void)
              Serial.print(" :");
              Serial.print(t[i]);
              Serial.println(" C");
-        #else
-             printf("PTC ID %d: %d C\n", i, t[i]);
         #endif
-        
-        
     }
-    // TODO heizung_ein_aus = ...
 }
 
 
@@ -193,9 +187,7 @@ void ausgaenge(void)
     solar();
     kesselfreigabe();
     scheitholzkessel();
-#ifndef PC_TEST
     set_outputs(outputs);
-#endif
 }
 
 // --- Arduino Funktionen ---
@@ -205,6 +197,10 @@ void setup_heizung(void)
     for (int i = 0; i < PTC_NR; i++) {
         t[i] = -1;
     }
+    for (int i = 0; i < OUTPUT_NR; i++) {
+        outputs[i] = 0;
+    }
+    set_outputs(outputs);
 }
 
 void loop_heizung(void)
