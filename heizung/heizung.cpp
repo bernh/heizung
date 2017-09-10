@@ -31,7 +31,7 @@ void messung(void)
 }
 
 
-int solar_fall_1(int einsprungpunkt) 
+int solar_boilerladung(int einsprungpunkt) 
 {
     // einsprungpunkt irrelevant
     if (t[F2] > (t[F3] + D1)) {
@@ -46,7 +46,7 @@ int solar_fall_1(int einsprungpunkt)
     return 0;
 }
 
-int solar_fall_2(int einsprungpunkt) 
+int solar_direktheizung(int einsprungpunkt) 
 {
     if (((einsprungpunkt == 1)  && (t[F1] < (t[F3] + D2))) ||
         (einsprungpunkt == 2)
@@ -66,7 +66,7 @@ int solar_fall_2(int einsprungpunkt)
     return 0;
 }
 
-int solar_fall_3(int einsprungpunkt) 
+int solar_pufferladung_sekt_1(int einsprungpunkt) 
 {
     // einsprungpunkt irrelevant
     if (t[F2] > (t[F4] + D4)) {
@@ -82,7 +82,7 @@ int solar_fall_3(int einsprungpunkt)
     return 0;
 }
 
-int solar_fall_4(int einsprungpunkt)
+int solar_pufferladung_sekt_2(int einsprungpunkt)
 {
     if (einsprungpunkt == 1) {
         if (t[F1] < (t[F4] + D5)) {
@@ -99,7 +99,7 @@ int solar_fall_4(int einsprungpunkt)
 
     if (einsprungpunkt == 2) {
         if (t[F5] < F5max) {
-            //TODO outputs[ZV3a] = 1; 
+            outputs[ZV3a] = 1; 
             outputs[UP3] = 1;
             outputs[UP6] = 1;
         } else {
@@ -109,8 +109,9 @@ int solar_fall_4(int einsprungpunkt)
     return 0;
 }
 
-int solar_fall_5(int einsprungpunkt) 
+int solar_pufferladung_sekt_3(int einsprungpunkt) 
 {
+    // return 1 für ALARM, sonst immer 0
     if (einsprungpunkt == 1) {
         if ((t[F1] < t[F5] + D7) && (t[F2] > (t[F6] + D8))) {
             // kein return, bei einsprungpunkt 2 weitermachen
@@ -121,12 +122,11 @@ int solar_fall_5(int einsprungpunkt)
 
     if (einsprungpunkt == 2) {
         if (t[F6] < F6max) {
-            //TODO outputs[ZV4a] = 1;
+            outputs[ZV4a] = 1;
             outputs[UP4] = 1;
             outputs[UP6] = 1;
         } else {
-            // TODO
-            // Alarm, F12 auf -10 Grad setzen
+            return 1; // ALARM
         }
     }
     return 0;
@@ -136,15 +136,20 @@ void solar(void)
 {
     int retval = 0;
 
-    retval = solar_fall_1(retval);
+    retval = solar_boilerladung(retval);
     if (retval != 0) {
-        retval = solar_fall_2(retval);
+        retval = solar_direktheizung(retval);
         if (retval != 0) {
-            retval = solar_fall_3(retval);
+            retval = solar_pufferladung_sekt_1(retval);
             if (retval != 0) {
-                retval = solar_fall_4(retval);
+                retval = solar_pufferladung_sekt_2(retval);
                 if (retval != 0) {
-                    retval = solar_fall_5(retval);
+                    retval = solar_pufferladung_sekt_3(retval);
+                    if (retval != 0) {
+                        outputs[ALARM] = 1;
+                        outputs[UP7] = 1;
+                        // TODO, F12 auf -10 Grad setzen?
+                    }
                 }
             }
         }
