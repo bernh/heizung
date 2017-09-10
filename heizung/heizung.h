@@ -1,5 +1,7 @@
 #ifdef PC_TEST
     #include "test.h"
+#else
+    #include "Arduino.h"
 #endif
 
 

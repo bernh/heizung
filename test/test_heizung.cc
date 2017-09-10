@@ -189,7 +189,7 @@ TEST_F(HeizungsTest, Boilerladung) {
     ASSERT_EQ(outputs[ZV4a  ], 0);
     ASSERT_EQ(outputs[ALARM ], 0);
 
-    // test dropping F3
+    // test dropping F2
     t[F2] = _F3 + D1 - 1;  
     loop_heizung();
     ASSERT_EQ(outputs[UP1   ], 1); // still ok because of hysterese

@@ -148,7 +148,6 @@ void solar(void)
                     if (retval != 0) {
                         outputs[ALARM] = 1;
                         outputs[UP7] = 1;
-                        // TODO, F12 auf -10 Grad setzen?
                     }
                 }
             }
