@@ -115,6 +115,7 @@ int solar_pufferladung_sekt_3(int einsprungpunkt)
     if (einsprungpunkt == 1) {
         if (F1_smaller_F5_plus_D7(t) && F2_bigger_F6_plus_D8(t)) {
             // kein return, bei einsprungpunkt 2 weitermachen
+            einsprungpunkt = 2;
         } else {
             return 0;
         }
