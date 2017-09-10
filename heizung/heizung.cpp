@@ -1,6 +1,5 @@
 #ifdef PC_TEST
     #include <stdio.h>
-    #include "test.h"
 #else
     #include "Arduino.h"
     #include "utils.h"
@@ -9,6 +8,7 @@
 #include "heizung.h"
 #include "ptc.h"
 #include "outputs.h"
+#include "compare.h"
 
 // --- globale Variablen ---
 static int t[PTC_NR] = {};
@@ -34,8 +34,8 @@ void messung(void)
 int solar_boilerladung(int einsprungpunkt) 
 {
     // einsprungpunkt irrelevant
-    if (t[F2] > (t[F3] + D1)) {
-        if (t[F3] < F3max) {
+    if (F2_bigger_F3_plus_D1(t)) {
+        if (F3_smaller_F3max(t)) {
             outputs[UP1] = 1;
         } else {
             return 2;
@@ -48,14 +48,14 @@ int solar_boilerladung(int einsprungpunkt)
 
 int solar_direktheizung(int einsprungpunkt) 
 {
-    if (((einsprungpunkt == 1)  && (t[F1] < (t[F3] + D2))) ||
+    if (((einsprungpunkt == 1)  && F1_smaller_F3_plus_D2(t)) ||
         (einsprungpunkt == 2)
        ) {
 
-        if ((t[F12] < F12min) &&
-            (t[F2] < (t[F7] + D12))
+        if (F12_smaller_F12min(t) &&
+            F2_smaller_F7_plus_D12(t)
            ) {
-            if (t[F2] > (t[F7] + D3)) {
+            if (F2_bigger_F7_plus_D3(t)) {
                 outputs[ZV5] = 1;
                 outputs[UP6] = 1;
             } 
@@ -69,8 +69,8 @@ int solar_direktheizung(int einsprungpunkt)
 int solar_pufferladung_sekt_1(int einsprungpunkt) 
 {
     // einsprungpunkt irrelevant
-    if (t[F2] > (t[F4] + D4)) {
-        if (t[F4] < F4max) {
+    if (F2_bigger_F4_plus_D4(t)) {
+        if (F4_smaller_F4max(t)) {
             outputs[UP2] = 1;
             outputs[UP6] = 1;
         } else {
@@ -85,8 +85,8 @@ int solar_pufferladung_sekt_1(int einsprungpunkt)
 int solar_pufferladung_sekt_2(int einsprungpunkt)
 {
     if (einsprungpunkt == 1) {
-        if (t[F1] < (t[F4] + D5)) {
-            if (t[F2] > (t[F5] + D6)) {
+        if (F1_smaller_F4_plus_D5(t)) {
+            if (F2_bigger_F5_plus_D6(t)) {
                 // kein return, bei einsprungpunkt 2 weitermachen
                 einsprungpunkt = 2;
             } else {
@@ -98,7 +98,7 @@ int solar_pufferladung_sekt_2(int einsprungpunkt)
     }
 
     if (einsprungpunkt == 2) {
-        if (t[F5] < F5max) {
+        if (F5_smaller_F5max(t)) {
             outputs[ZV3a] = 1; 
             outputs[UP3] = 1;
             outputs[UP6] = 1;
@@ -113,7 +113,7 @@ int solar_pufferladung_sekt_3(int einsprungpunkt)
 {
     // return 1 für ALARM, sonst immer 0
     if (einsprungpunkt == 1) {
-        if ((t[F1] < t[F5] + D7) && (t[F2] > (t[F6] + D8))) {
+        if (F1_smaller_F5_plus_D7(t) && F2_bigger_F6_plus_D8(t)) {
             // kein return, bei einsprungpunkt 2 weitermachen
         } else {
             return 0;
@@ -121,7 +121,7 @@ int solar_pufferladung_sekt_3(int einsprungpunkt)
     }
 
     if (einsprungpunkt == 2) {
-        if (t[F6] < F6max) {
+        if (F6_smaller_F6max(t)) {
             outputs[ZV4a] = 1;
             outputs[UP4] = 1;
             outputs[UP6] = 1;
@@ -158,15 +158,15 @@ void solar(void)
 
 void kesselfreigabe(void) 
 {
-    if ((t[F2]  < (t[F7] + D13)) &&
-        (t[F10] < (t[F7] + D13)) &&
-        (t[F12] < F12min)
+    if (F2_smaller_F7_plus_D13(t) &&
+        F10_smaller_F7_plus_D13(t) &&
+        F12_smaller_F12min(t)
        ) {
         outputs[KESSEL] = 1;
     }
 
-    if ((t[F10] > (t[F11] + D9)) &&
-        (t[F11] < F11max)
+    if (F10_bigger_F11_plus_D9(t) &&
+        F11_smaller_F11max(t)
        ) {
         // Fall 7
         outputs[UP8] = 1;
@@ -175,8 +175,8 @@ void kesselfreigabe(void)
 
 void scheitholzkessel(void)
 {
-    if ((t[F8] > F8min) &&
-        (t[F8] > (t[F11] + D9))
+    if (F8_bigger_F8min(t) &&
+        F8_bigger_F11_plus_D9(t)
        ) {
         // Fall 9
         outputs[UP7] = 1;

@@ -3,8 +3,8 @@ using namespace std;
 
 #include "gtest/gtest.h"
 
-#include "test.h"
 #include "heizung.h"
+#include "compare.h"
 
 // global variables (-> our test cases are not thread safe!)
 static int outputs[OUTPUT_NR] = {1,2,3,4,5,6,7,8,9,10,11,12};
@@ -25,6 +25,96 @@ int temperatur_messung(int ptc_id) {
 }
 
 // --- Tests --------------------------------------------------
+
+TEST(Basic, Compare_Smaller) {
+    int t1, t2, state;
+    t1 = 10;
+    t2 = 20;
+    state = 0;
+    state = compare(t1, t2, 1, state);
+    ASSERT_EQ(state, 1); // t1 < t2 is TRUE
+
+    t1 = 20;
+    t2 = 20;
+    state = compare(t1, t2, 1, state);
+    ASSERT_EQ(state, 1); // t1 < t2 is TRUE
+
+    t1 = 21;
+    t2 = 20;
+    state = compare(t1, t2, 1, state);
+    ASSERT_EQ(state, 1); // t1 < t2 is still TRUE
+
+    t1 = 22;
+    t2 = 20;
+    state = compare(t1, t2, 1, state);
+    ASSERT_EQ(state, 0); // t1 < t2 is FALSE now
+
+    t1 = 21;
+    t2 = 20;
+    state = compare(t1, t2, 1, state);
+    ASSERT_EQ(state, 0); // t1 < t2 is FALSE
+
+    t1 = 20;
+    t2 = 20;
+    state = compare(t1, t2, 1, state);
+    ASSERT_EQ(state, 0); // t1 < t2 is FALSE
+
+    t1 = 19;
+    t2 = 20;
+    state = compare(t1, t2, 1, state);
+    ASSERT_EQ(state, 0); // t1 < t2 is still FALSE
+
+    t1 = 18;
+    t2 = 20;
+    state = compare(t1, t2, 1, state);
+    ASSERT_EQ(state, 1); // t1 < t2 is TRUE again
+}
+
+
+TEST(Basic, Compare_Bigger) {
+    int t1, t2, state;
+    t1 = 10;
+    t2 = 20;
+    state = 0;
+    state = compare(t2, t1, 1, state);
+    ASSERT_EQ(state, 0); // t1 > t2 is FALSE
+
+    t1 = 20;
+    t2 = 20;
+    state = compare(t2, t1, 1, state);
+    ASSERT_EQ(state, 0); // t1 > t2 is FALSE
+
+    t1 = 21;
+    t2 = 20;
+    state = compare(t2, t1, 1, state);
+    ASSERT_EQ(state, 0); // t1 > t2 is still FALSE
+
+    t1 = 22;
+    t2 = 20;
+    state = compare(t2, t1, 1, state);
+    ASSERT_EQ(state, 1); // t1 > t2 is TRUE now
+
+    t1 = 21;
+    t2 = 20;
+    state = compare(t2, t1, 1, state);
+    ASSERT_EQ(state, 1); // t1 < t2 is TRUE
+
+    t1 = 20;
+    t2 = 20;
+    state = compare(t2, t1, 1, state);
+    ASSERT_EQ(state, 1); // t1 > t2 is TRUE
+
+    t1 = 19;
+    t2 = 20;
+    state = compare(t2, t1, 1, state);
+    ASSERT_EQ(state, 1); // t1 < t2 is still TRUE
+
+    t1 = 18;
+    t2 = 20;
+    state = compare(t2, t1, 1, state);
+    ASSERT_EQ(state, 0); // t1 > t2 is FALSE again
+}
+
 
 class HeizungsTest : public testing::Test {
 
@@ -68,10 +158,11 @@ class HeizungsTest : public testing::Test {
 
 TEST_F(HeizungsTest, Boilerladung) {
 
+    int _F3 = 50;
     int temperatures[PTC_NR] = {
-        60, // Sonnenfühler
-        80, // Kollektorfühler
-        50, // Boilerfühler unten
+        100, // Sonnenfühler
+        _F3 + D1 + 10, // Kollektorfühler
+        _F3, // Boilerfühler unten
         20, // Pufferfühler Sektion 1
         30, // Pufferfühler Sektion 2
         40, // Pufferfühler Sektion 3
@@ -97,6 +188,14 @@ TEST_F(HeizungsTest, Boilerladung) {
     ASSERT_EQ(outputs[ZV3a  ], 0);
     ASSERT_EQ(outputs[ZV4a  ], 0);
     ASSERT_EQ(outputs[ALARM ], 0);
+
+    // test dropping F3
+    t[F2] = _F3 + D1 - 1;  
+    loop_heizung();
+    ASSERT_EQ(outputs[UP1   ], 1); // still ok because of hysterese
+    t[F2] = _F3 + D1 - 2; 
+    loop_heizung();
+    ASSERT_EQ(outputs[UP1   ], 0);  // F2 to low now
 }
 
 
@@ -106,7 +205,7 @@ TEST_F(HeizungsTest, Direktheizung_Solar_1) {
     int temperatures[PTC_NR] = {
         _F3 + D2 - 3, // Sonnenfühler
         _F3 + D1 - 3, // Kollektorfühler
-        50, // Boilerfühler unten
+        _F3, // Boilerfühler unten
         20, // Pufferfühler Sektion 1
         30, // Pufferfühler Sektion 2
         40, // Pufferfühler Sektion 3

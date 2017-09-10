@@ -1,3 +1,8 @@
+#ifdef PC_TEST
+    #include "test.h"
+#endif
+
+
 void setup_heizung(void);
 void loop_heizung(void);
 void loop_output_test(void);

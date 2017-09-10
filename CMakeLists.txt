@@ -16,7 +16,7 @@ add_library(gtest ${gtest_SOURCE_DIR}/src/gtest-all.cc)
 add_library(gtest_main ${gtest_SOURCE_DIR}/src/gtest_main.cc)
 
 # set up source files to be tested and build library
-set(heizung_srcs heizung/heizung.cpp)
+set(heizung_srcs heizung/heizung.cpp heizung/compare.cpp)
 add_library(heizung ${heizung_srcs})
 
 # build test executables
