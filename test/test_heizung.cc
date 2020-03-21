@@ -10,7 +10,7 @@ using namespace std;
 static int outputs[OUTPUT_NR] = {1,2,3,4,5,6,7,8,9,10,11,12};
 static int t[PTC_NR] = {};
 
-// --- interface functions to Arduino code ---------------------
+// --- mock functions for Arduino code ---------------------
 
 // copy output values into global variable
 void set_outputs(int *outs) {

@@ -9,6 +9,7 @@
 #include "ptc.h"
 #include "outputs.h"
 #include "compare.h"
+#include "display.h"
 
 // --- globale Variablen ---
 static int t[PTC_NR] = {};
@@ -20,13 +21,6 @@ void messung(void)
 {
     for (int i = 0; i < PTC_NR; i++) {
         t[i] = temperatur_messung(i);
-        #ifndef PC_TEST
-             Serial.print("PTC ID ");
-             Serial.print(i);
-             Serial.print(" :");
-             Serial.print(t[i]);
-             Serial.println(" C");
-        #endif
     }
 }
 
@@ -211,6 +205,9 @@ void setup_heizung(void)
 void loop_heizung(void)
 {
     messung();
+    #ifndef PC_TEST
+    display(t);
+    #endif
     ausgaenge();
 }
 

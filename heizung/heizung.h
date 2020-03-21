@@ -1,9 +1,11 @@
+#ifndef _HEIZUNG_H_
+#define _HEIZUNG_H_
+
 #ifdef PC_TEST
     #include "test.h"
 #else
     #include "Arduino.h"
 #endif
-
 
 void setup_heizung(void);
 void loop_heizung(void);
@@ -74,3 +76,4 @@ static const int analog_pin_mapping[PTC_NR]  = {A0, A1, A2, A3, A4, A5, A6, A7, 
 
 static const int output_pin_mapping[OUTPUT_NR] = {22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33};
 
+#endif // _HEIZUNG_H_
