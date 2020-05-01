@@ -1,5 +1,6 @@
 #include "heizung.h"
 #include "display.h"
+#include "avr/wdt.h"
 
 void setup() {
     // --- initialize serial connection
@@ -16,9 +17,12 @@ void setup() {
     setup_lcd();
     // --- initialize temperatures and outputs
     setup_heizung();
+    // --- activate watchdog with 2s
+    wdt_enable(WDTO_2S);
 }
 
 void loop() {
+    wdt_reset(); // serve watchdog
     loop_heizung();
     delay(1000);
 }
