@@ -5,7 +5,7 @@
 #include "display.h"
 #include "heizung.h"
 
-LiquidCrystal_I2C lcd(0x27, 16, 4);
+LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 void setup_lcd(void)
 {
@@ -27,8 +27,11 @@ void display(int *t)
     sprintf(line3, "10 %-3d 11 %-3d 12 %-3d", t[9], t[10], t[11]);
     lcd.setCursor(0,0);
     lcd.print(line0);
+    lcd.setCursor(0,1);
     lcd.print(line1);
+    lcd.setCursor(0,2);
     lcd.print(line2);
+    lcd.setCursor(0,3);
     lcd.print(line3);
 
     // print temperatures via serial connection
