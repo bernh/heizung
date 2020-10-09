@@ -12,6 +12,8 @@ void loop_heizung(void);
 void loop_output_test(void);
 
 // --- Konfiguration ----------------------------------------------------------
+#define ENABLE_LCD
+#define ENABLE_SERIAL
 
 // Temperaturdifferenzen
 #define D1      7       // Kollektorfühler und Boiler unten

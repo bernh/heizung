@@ -38,6 +38,7 @@ void display(int *t)
     char line2[21];
     char line3[21];
 
+#ifdef ENABLE_LCD
     // print temperatures on LCD 0
     sprintf(line0, "F1:  %3d C          ", t[0]);
     sprintf(line1, "F2:  %3d C          ", t[1]);
@@ -58,7 +59,9 @@ void display(int *t)
     sprintf(line2, "F11: %3d C          ", t[10]);
     sprintf(line3, "F12: %3d C          ", t[11]);
     lcd_print(&lcd2, line0, line1, line2, line3);
+#endif // ENABLE_LCD
 
+#ifdef ENABLE_SERIAL
     // print temperatures via serial connection
     for (int i = 0; i < PTC_NR; i++) {
         Serial.print("PTC ID ");
@@ -67,4 +70,5 @@ void display(int *t)
         Serial.print(t[i]);
         Serial.println(" C");
     }
+#endif // ENABLE_SERIAL
 }
