@@ -1,6 +1,7 @@
 #include "heizung.h"
 #include "display.h"
 #include "avr/wdt.h"
+#include <Wire.h>
 
 void setup() {
     // --- initialize temperatures and outputs
@@ -24,27 +25,14 @@ void setup() {
 #endif // ENABLE_SERIAL
     
 #ifdef ENABLE_LCD
-    // --- initialize LCD
-    // Issue 20 I2C clocks to make sure no slaves are hung in a read
-    // no idea if this helps/is useful but found on some forum
-    pinMode(20, OUTPUT);
-    pinMode(21, OUTPUT);
-    pinMode(70, OUTPUT);
-    pinMode(71, OUTPUT);
-    digitalWrite(20, LOW);
-    digitalWrite(70, LOW);
-    for (int i = 0; i < 20; i++) {
-        digitalWrite(21, LOW);
-        digitalWrite(71, LOW);
-        delayMicroseconds(10);
-        digitalWrite(21, HIGH);
-        digitalWrite(71, HIGH);
-        delayMicroseconds(10);
-    }    
-    // Pullups needed for I2C?
-    //  https://forum.arduino.cc/index.php?topic=235397.0
+    // --- initialize LCD    
     setup_lcd();
- #endif // ENABLE_LCD
+
+    // set timeout to avoid I2C problems, new in Arduino 1.8.3 (update via Boards Manager!)
+    // https://github.com/arduino/ArduinoCore-avr/pull/107
+    Wire.setWireTimeout(25000, true);
+#endif // ENABLE_LCD
+
 }
 
 void loop() {
