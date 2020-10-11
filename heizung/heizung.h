@@ -12,8 +12,12 @@ void loop_heizung(void);
 void loop_output_test(void);
 
 // --- Konfiguration ----------------------------------------------------------
-#define ENABLE_LCD
-#define ENABLE_SERIAL
+#define ENABLE_LCD    // Compile-time Konfiguration für LCD code
+#define ENABLE_SERIAL // Compile-time Konfiguration für verwendung serielle Schnittstelle
+
+// Konfiguration LCD ein/aus via verbundene Pins: LCD_ENABLE_IN, LCD_ENABLE_OUT
+#define LCD_ENABLE_IN   52
+#define LCD_ENABLE_OUT  53
 
 // Temperaturdifferenzen
 #define D1      7       // Kollektorfühler und Boiler unten

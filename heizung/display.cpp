@@ -9,8 +9,11 @@ LiquidCrystal_I2C lcd0(0x27, 20, 4);
 LiquidCrystal_I2C lcd1(0x26, 20, 4);
 LiquidCrystal_I2C lcd2(0x25, 20, 4);
 
+bool lcd_enabled = false;
+
 void setup_lcd(void)
 {
+    lcd_enabled = true;
     lcd0.init();
     lcd0.backlight();
     lcd1.init();
@@ -39,26 +42,28 @@ void display(int *t)
     char line3[21];
 
 #ifdef ENABLE_LCD
-    // print temperatures on LCD 0
-    sprintf(line0, "F1:  %3d C          ", t[0]);
-    sprintf(line1, "F2:  %3d C          ", t[1]);
-    sprintf(line2, "F3:  %3d C          ", t[2]);
-    sprintf(line3, "F4:  %3d C          ", t[3]);
-    lcd_print(&lcd0, line0, line1, line2, line3);
+    if (lcd_enabled) {
+        // print temperatures on LCD 0
+        sprintf(line0, "F1:  %3d C          ", t[0]);
+        sprintf(line1, "F2:  %3d C          ", t[1]);
+        sprintf(line2, "F3:  %3d C          ", t[2]);
+        sprintf(line3, "F4:  %3d C          ", t[3]);
+        lcd_print(&lcd0, line0, line1, line2, line3);
 
-    // print temperatures on LCD 1
-    sprintf(line0, "F5:  %3d C          ", t[4]);
-    sprintf(line1, "F6:  %3d C          ", t[5]);
-    sprintf(line2, "F7:  %3d C          ", t[6]);
-    sprintf(line3, "F8:  %3d C          ", t[7]);
-    lcd_print(&lcd1, line0, line1, line2, line3);
+        // print temperatures on LCD 1
+        sprintf(line0, "F5:  %3d C          ", t[4]);
+        sprintf(line1, "F6:  %3d C          ", t[5]);
+        sprintf(line2, "F7:  %3d C          ", t[6]);
+        sprintf(line3, "F8:  %3d C          ", t[7]);
+        lcd_print(&lcd1, line0, line1, line2, line3);
 
-    // print temperatures on LCD 2
-    sprintf(line0, "F9:  %3d C          ", t[8]);
-    sprintf(line1, "F10: %3d C          ", t[9]);
-    sprintf(line2, "F11: %3d C          ", t[10]);
-    sprintf(line3, "F12: %3d C          ", t[11]);
-    lcd_print(&lcd2, line0, line1, line2, line3);
+        // print temperatures on LCD 2
+        sprintf(line0, "F9:  %3d C          ", t[8]);
+        sprintf(line1, "F10: %3d C          ", t[9]);
+        sprintf(line2, "F11: %3d C          ", t[10]);
+        sprintf(line3, "F12: %3d C          ", t[11]);
+        lcd_print(&lcd2, line0, line1, line2, line3);
+    }
 #endif // ENABLE_LCD
 
 #ifdef ENABLE_SERIAL

@@ -25,12 +25,17 @@ void setup() {
 #endif // ENABLE_SERIAL
     
 #ifdef ENABLE_LCD
-    // --- initialize LCD    
-    setup_lcd();
-
-    // set timeout to avoid I2C problems, new in Arduino 1.8.3 (update via Boards Manager!)
-    // https://github.com/arduino/ArduinoCore-avr/pull/107
-    Wire.setWireTimeout(25000, true);
+    pinMode(LCD_ENABLE_IN, INPUT_PULLUP);
+    pinMode(LCD_ENABLE_OUT, OUTPUT);
+    // set OUT to low and check if IN is pulled low. If yes, they are connected -> LCD enabled
+    digitalWrite(LCD_ENABLE_OUT, LOW);
+    if (digitalRead(LCD_ENABLE_IN) == LOW) {
+      // --- initialize LCD    
+      setup_lcd();
+      // set timeout to avoid I2C problems, new in Arduino 1.8.3 (update via Boards Manager!)
+      // https://github.com/arduino/ArduinoCore-avr/pull/107
+      Wire.setWireTimeout(25000, true);
+    }
 #endif // ENABLE_LCD
 
 }
